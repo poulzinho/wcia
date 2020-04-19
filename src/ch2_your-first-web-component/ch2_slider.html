@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider</title>
+    <script>
+        class Slider extends HTMLElement {
+            connectedCallback() {
+                alert('hi from WCIA Slider');        1
+            }
+        }
+        if (!customElements.get('wcia-slider')) {
+            customElements.define('wcia-slider', Slider);
+        }
+    </script>
+</head>
+<body>
+
+<wcia-slider></wcia-slider>
+
+</body>
+</html>
