@@ -24,6 +24,10 @@
                 this.querySelector('.thumb').style.position = 'absolute';
                 this.querySelector('.thumb').style.border = '3px solid white';
                 this.querySelector('.thumb').style.borderRadius = '3px';
+
+                this.querySelector('.bg-overlay').style.backgroundColor = this.getAttribute('backgroundColor');
+
+                this.querySelector('.thumb').style.marginLeft = this.getAttribute('value') + 'px';
             }
         }
 
@@ -34,7 +38,7 @@
 </head>
 <body>
 
-<wcia-slider></wcia-slider>
+<wcia-slider backgroundColor="#292929" value="180" ></wcia-slider>
 
 </body>
 </html>
