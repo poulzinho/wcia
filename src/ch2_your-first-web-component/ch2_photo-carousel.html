@@ -7,11 +7,21 @@
     <script>
         class PhotoCarousel extends HTMLElement {
             connectedCallback() {
+                this._photoIndex = 0;
+                this._photos = this.getAttribute('photos').split(',');
+
                 this.innerHTML = '<h2>' + this.getAttribute('title') + '</h2>' +
                     '<h4>by ' + this.getAttribute('author') + '</h4>' +
                     '<div class="image-container"></div>' +
                     '<button class="back">&lt</button>' +
                     '<button class="forward">&gt</button>';
+
+                this.showPhoto();
+            }
+
+            showPhoto() {
+                this.querySelector('.image-container').style.backgroundImage =
+                    'url(' + this._photos[this._photoIndex] + ')';
             }
         }
 
@@ -41,6 +51,9 @@
             margin-top: 15px;
             flex: 1;
             background-color: black;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: 50%;
         }
     </style>
 
@@ -49,7 +62,7 @@
 
 <wcia-photo-carousel title="Future Vacation Photos"
                      author="Poulzinho"
-                     photos="images/fBmIASF.jpg,images/3zxD6rz.jpg,images/nKBgeLOr.jpg,images/yVjJZ1Yr.jpg">
+                     photos="images/1.jpg,images/2.jpg">
 </wcia-photo-carousel>
 
 </body>
