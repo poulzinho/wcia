@@ -63,6 +63,7 @@
     </script>
     <style>
         wcia-photo-carousel {
+            position: relative;
             width: 500px;
             height: 300px;
             display: flex;
@@ -86,6 +87,24 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: 50%;
+        }
+
+        wcia-photo-carousel button {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 48px;
+            color: white;
+            position: absolute;
+            top: 50%;
+        }
+
+        wcia-photo-carousel button.back {
+            left: 10px;
+        }
+
+        wcia-photo-carousel button.forward {
+            right: 10px;
         }
     </style>
 
