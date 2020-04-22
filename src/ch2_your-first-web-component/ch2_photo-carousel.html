@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Carousel</title>
+
+    <script>
+        class PhotoCarousel extends HTMLElement {
+            connectedCallback() {
+
+            }
+        }
+
+        if(!customElements.get('wcia-photo-carousel')) {
+            customElements.define('wcia-photo-carousel', PhotoCarousel);
+        }
+    </script>
+
+</head>
+<body>
+
+<wcia-photo-carousel title="Future Vacation Photos"
+                     author="Ben Farrell"
+                     photos="images/fBmIASF.jpg,images/3zxD6rz.jpg,images/nKBgeLOr.jpg,images/yVjJZ1Yr.jpg">
+</wcia-photo-carousel>
+
+</body>
+</html>
