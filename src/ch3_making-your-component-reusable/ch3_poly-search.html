@@ -17,14 +17,39 @@
                 const request = new XMLHttpRequest();
                 request.open('GET', url, true);
                 request.addEventListener('load', (event) => {
-                    console.log(JSON.parse(event.target.response));
+                    this.renderResults(JSON.parse(event.target.response).assets);
                 });
                 request.send();
+            }
+
+            renderResults(assets) {
+                let html = '';
+
+                assets.forEach((asset) => {
+                    html += '<img src="' + asset.thumbnail.url + '" width="200" height="150" />';
+                });
+
+                this.innerHTML = html;
             }
         }
 
         customElements.define('poly-search', PolySearch);
     </script>
+    <style>
+        poly-search {
+            border-style: solid;
+            border-width: 1px;
+            border-color: #9a9a9a;
+            padding: 10px;
+            background-color: #fafafa;
+            display: inline-block;
+            text-align: center;
+        }
+
+        poly-search img {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <poly-search></poly-search>
