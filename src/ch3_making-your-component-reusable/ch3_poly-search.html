@@ -6,21 +6,40 @@
     <script type="module">
         class PolySearch extends HTMLElement {
             connectedCallback() {
-                this.doSearch();
+                if (this.hasAttribute('thumbheight')) {
+                    this._thumbheight = this.getAttribute('thumbheight');
+                    this._thumbwidth = (this.getAttribute('thumbheight') *
+                        1.3333 /*aspect ratio*/);
+                } else {
+                    this._thumbheight = 150;
+                    this._thumbwidth = 200;
+                }
+
+                if (this.hasAttribute('backgroundcolor')) {
+                    this.style.backgroundColor = this.getAttribute('backgroundcolor');
+                }
+            }
+
+            static get observedAttributes() {
+                return ['searchterm'];
+            }
+
+            attributeChangedCallback(name, oldval, newval) {
+                if (name === 'searchterm') {
+                    this.doSearch();
+                    3
+                }
             }
 
             doSearch() {
-                if (this.getAttribute('apiKey') &&
-                    this.getAttribute('searchTerm')) {
-                    const url =
-                        'https://poly.googleapis.com/v1/assets?keywords=' +
-                        this.getAttribute('searchTerm') + '&format=OBJ&key=' +
-                        this.getAttribute('apiKey');
+                if (this.getAttribute('apiKey') && this.getAttribute('searchTerm')) {
+                    const url = this.getAttribute('baseuri') +
+                        '?keywords=' + this.getAttribute('searchTerm') + '&format=' +
+                        this.getAttribute('format') + '&key=' + this.getAttribute('apiKey');
                     const request = new XMLHttpRequest();
                     request.open('GET', url, true);
                     request.addEventListener('load', (event) => {
-                        this.renderResults(
-                            JSON.parse(event.target.response).assets);
+                        this.renderResults(JSON.parse(event.target.response).assets);
                     });
                     request.send();
                 }
@@ -30,7 +49,9 @@
                 let html = '';
 
                 assets.forEach((asset) => {
-                    html += '<img src="' + asset.thumbnail.url + '" width="200" height="150" />';
+                    html += '<img src="' + asset.thumbnail.url + '" width="' +
+                        this._thumbwidth + '" height="' +
+                        this._thumbheight + '"/>';
                 });
 
                 this.innerHTML = html;
@@ -54,9 +75,30 @@
         poly-search img {
             margin: 5px;
         }
+
+        input {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
-<poly-search apiKey="YOUR_API" searchTerm="lion"></poly-search>
+
+<label>Enter search term: </label>
+<input type="text" onchange="updatePolySearch(event)"/>
+<br/><br/>
+
+<script>
+    function updatePolySearch(event) {
+        console.log('updating...', event);
+
+        document.querySelector('poly-search').setAttribute('searchterm', event.target.value);
+    }
+</script>
+<poly-search apiKey="YOUR_API"
+             format="OBJ"
+             thumbheight="50"
+             backgroundcolor="red"
+             baseuri="https://poly.googleapis.com/v1/assets"
+             searchTerm="panda"></poly-search>
 </body>
 </html>
